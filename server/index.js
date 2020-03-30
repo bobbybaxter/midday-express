@@ -1,3 +1,4 @@
+// should be where skwell is initiated
 /* eslint-disable no-magic-numbers */
 const express = require( "express" );
 const bodyParser = require( "body-parser" );
@@ -5,14 +6,10 @@ const logger = require( "morgan" );
 
 const app = express();
 
-app.use( bodyParser.urlencoded( { extended: false } ) );
+app.use( bodyParser.json() );
 app.use( logger( "tiny" ) );
 
-app.get( "/api/greeting", ( req, res ) => {
-	const name = req.query.name || "World";
-	res.setHeader( "Content-Type", "application/json" );
-	res.send( JSON.stringify( { greeting: `Hello ${ name }!` } ) );
-} );
+app.use( require( "./routes" ) );
 
 app.listen( 3001, () =>
 	console.log( "Express server is running on localhost:3001" )
