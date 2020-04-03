@@ -1,11 +1,14 @@
-const express = require( "express" );
-const router = new express.Router();
+const { Router } = require( "express" );
+const router = new Router();
 
-router
-	.use( require( "./create" ) )
-	.use( require( "./delete" ) )
-	.use( require( "./get" ) )
-	.use( require( "./getAll" ) )
-	.use( require( "./update" ) );
+module.exports = app => {
+	const { middleware } = app;
 
-module.exports = router;
+	return router
+		.use( middleware.context )
+		.use( "/:cardId", require( "./get" )( app ) )
+		.use( "/", require( "./getAll" )( app ) )
+		.use( "/", require( "./create" )( app ) )
+		.use( "/:cardId", require( "./delete" )( app ) )
+		.use( "/:cardId", require( "./update" )( app ) );
+};

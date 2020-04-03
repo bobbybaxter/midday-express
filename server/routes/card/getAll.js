@@ -1,19 +1,17 @@
-const express = require( "express" );
-const router = new express.Router();
-
-const cards = {
-	1: {
-		id: "1",
-		title: "card1"
-	},
-	2: {
-		id: "2",
-		title: "card2"
+module.exports = app => {
+	const { skwell } = app;
+	async function getCards() {
+		try {
+			return await skwell.query(
+				"select * from Card where Version = 300"
+			);
+		} catch ( err ) {
+			return console.error( err );
+		}
 	}
+
+	return async function( req, res ) {
+		const cards = await getCards();
+		res.send( cards );
+	};
 };
-
-router.get( "/api/cards", ( req, res ) => {
-	return res.send( Object.values( cards ) );
-} );
-
-module.exports = router;

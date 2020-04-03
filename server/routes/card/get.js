@@ -1,19 +1,18 @@
-const express = require( "express" );
-const router = new express.Router();
-
-const cards = {
-	1: {
-		id: "1",
-		title: "card1"
-	},
-	2: {
-		id: "2",
-		title: "card2"
-	}
+module.exports = app => {
+	return async function( { params }, res ) {
+		const card = await app.data.card.getById( params.cardId );
+		res.send( card );
+	};
 };
 
-router.get( "/api/cards/:cardId", ( req, res ) => {
-	return res.send( cards[ req.params.cardId ] );
-} );
+// const errorHandler = route => ( req, res, next = console.error ) =>
+// 	Promise.resolve( route( req, res ) ).catch( next );
 
-module.exports = router;
+// module.exports = app => {
+// 	return errorHandler(
+// 		async function( { params }, res ) {
+// 		// const card = await app.data.card.getById( params.cardId );
+// 			const card = err;
+// 			res.send( card );
+// 		} );
+// };
