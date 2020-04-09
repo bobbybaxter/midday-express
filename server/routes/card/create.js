@@ -1,9 +1,11 @@
-const express = require( "express" );
-const router = new express.Router();
+const { Router } = require( "express" );
+const router = new Router();
 
-router.post( "/api/cards", ( req, res ) => {
-	const newCard = req.body;
-	return res.send( newCard );
-} );
+module.exports = skwell => {
+	router.post( "/", ( req, res ) => {
+		const newCard = req.body;
+		return res.send( newCard );
+	} );
 
-module.exports = router;
+	return router;
+};

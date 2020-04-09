@@ -16,9 +16,16 @@
       "allowTemplateLiterals": true
     },
     "rules": {
+      "class-methods-use-this": 0,
+      "linebreak-style": 0,
       "no-console": [1, { "allow": ["log", "error"] }],
       "no-debugger": 1,
-      "class-methods-use-this": 0,
-      "linebreak-style": 0 
+      "no-unused-vars": ["error", { "args": "none" }]
+    },
+    "env": {
+      "node": true,
+      "browser": false,
+      "commonjs": false,
+      "jest": true
     }
   }

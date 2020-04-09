@@ -1,5 +1,5 @@
-const express = require( "express" );
-const router = new express.Router();
+const { Router } = require( "express" );
+const router = new Router();
 
 let cards = {
 	1: {
@@ -12,17 +12,19 @@ let cards = {
 	}
 };
 
-router.delete( "/api/cards/:cardId", ( req, res ) => {
-	const cardToDelete = cards[ req.params.id ];
+module.exports = skwell => {
+	router.delete( "/:cardId", ( req, res ) => {
+		const cardToDelete = cards[ req.params.id ];
 
-	cards = cards.filter( card => {
-		if ( card.id !== cardToDelete.id ) {
-			return true;
-		}
-		return false;
+		cards = cards.filter( card => {
+			if ( card.id !== cardToDelete.id ) {
+				return true;
+			}
+			return false;
+		} );
+
+		return res.send( "Card is deleted", cards );
 	} );
 
-	return res.send( "Book is deleted", cards );
-} );
-
-module.exports = router;
+	return router;
+};

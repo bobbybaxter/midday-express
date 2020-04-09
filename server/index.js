@@ -1,16 +1,22 @@
-// should be where skwell is initiated
-/* eslint-disable no-magic-numbers */
-const express = require( "express" );
-const bodyParser = require( "body-parser" );
-const logger = require( "morgan" );
+const middlewareFactory = require( "./middleware" );
+const sqlFactory = require( "./setup/sql" );
+const serverFactory = require( "./server" );
+const dataFactory = require( "./data" );
 
-const app = express();
+const pino = require( "pino" );
+const expressPino = require( "express-pino-logger" );
 
-app.use( bodyParser.json() );
-app.use( logger( "tiny" ) );
+const log = pino( { level: process.env.LOG_LEVEL } );
+const logger = expressPino( { log } );
 
-app.use( require( "./routes" ) );
+const app = {
+	skwell: sqlFactory,
+	log,
+	logger
+};
 
-app.listen( 3001, () =>
-	console.log( "Express server is running on localhost:3001" )
-);
+app.middleware = middlewareFactory( app );
+app.data = dataFactory( app );
+app.server = serverFactory( app );
+
+module.exports = app;

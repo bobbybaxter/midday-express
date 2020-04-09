@@ -1,7 +1,13 @@
-const express = require( "express" );
-const router = new express.Router();
+const { Router } = require( "express" );
+const router = new Router();
+const bodyParser = require( "body-parser" );
 
-router
-	.use( require( "./card" ) );
+module.exports = app => {
+	router
+		.use( bodyParser.json() );
 
-module.exports = router;
+	router
+		.use( "/api/cards", require( "./card" )( app ) );
+
+	return router;
+};
