@@ -12,6 +12,8 @@ module.exports = app => {
 			}
 		);
 
+		if ( !card ) { throw new Error( "Not Found" ); }
+
 		return card;
 	};
 };

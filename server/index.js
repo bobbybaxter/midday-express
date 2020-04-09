@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 const middlewareFactory = require( "./middleware" );
 const sqlFactory = require( "./setup/sql" );
 const serverFactory = require( "./server" );
@@ -19,3 +18,5 @@ const app = {
 app.middleware = middlewareFactory( app );
 app.data = dataFactory( app );
 app.server = serverFactory( app );
+
+module.exports = app;
